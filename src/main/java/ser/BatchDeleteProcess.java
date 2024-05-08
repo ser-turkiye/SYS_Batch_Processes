@@ -58,7 +58,7 @@ public class BatchDeleteProcess extends UnifiedAgent {
             docNumber = task.getDescriptorValue(Conf.Descriptors.DocNumber);
             revNumber = task.getDescriptorValue(Conf.Descriptors.Revision);
 
-            if(docs.contains(processID)){continue;}
+            //if(docs.contains(processID)){continue;}
 
             IDocument mainDoc = Utils.server.getDocument4ID(mainDocID, Utils.session);
             if(mainDoc == null){
@@ -76,7 +76,7 @@ public class BatchDeleteProcess extends UnifiedAgent {
                 dbks.put("DocID" + cnt, (mainDocID != null ? mainDocID : ""));
                 dbks.put("ProjectNo" + cnt, (projectNo != null  ? projectNo : ""));
                 docs.add(processID);
-                //getDocumentServer().deleteInformationObject(getSes(), proi);
+                getDocumentServer().deleteInformationObject(getSes(), proi);
             }
 
             //TimeUnit.SECONDS.sleep(30);
