@@ -62,13 +62,11 @@ public class BatchDeleteProcess extends UnifiedAgent {
 
             IDocument mainDoc = Utils.server.getDocument4ID(mainDocID, Utils.session);
             if(mainDoc == null){
-                List<ILink> mainAttachLinks = proi.getLoadedInformationObjectLinks().getLinks();
-                for(ILink link : mainAttachLinks){
-                    IInformationObject infoSource = link.getSourceInformationObject();
-                    IInformationObject infoTarget = link.getTargetInformationObject();
-                    log.info("test");
-                }
-
+//                List<ILink> mainAttachLinks = proi.getLoadedInformationObjectLinks().getLinks();
+//                for(ILink link : mainAttachLinks){
+//                    IInformationObject infoAttachment = link.getTargetInformationObject();
+//                    log.info("test");
+//                }
                 cnt++;
                 dbks.put("DocNo" + cnt, (docNumber != null  ? docNumber : ""));
                 dbks.put("RevNo" + cnt, (revNumber != null  ? revNumber : ""));
