@@ -3,6 +3,7 @@ package junit
 import de.ser.doxis4.agentserver.AgentExecutionResult
 import org.junit.*
 import ser.BatchDeleteProcess
+import ser.DeleteSubReviewProcessSch
 
 class ExampleTests {
 
@@ -21,7 +22,7 @@ class ExampleTests {
     @Test
     void testForAgentResult() {
 
-        def agent = new BatchDeleteProcess();
+        def agent = new DeleteSubReviewProcessSch();
 
         binding["AGENT_EVENT_OBJECT_CLIENT_ID"] = "ST03BPM245ad681ac-dc12-4ab6-9358-73f2d9cec1e5182024-03-12T08:36:30.056Z010"
 
