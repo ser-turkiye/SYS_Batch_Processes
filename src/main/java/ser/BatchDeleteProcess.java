@@ -29,7 +29,7 @@ public class BatchDeleteProcess extends UnifiedAgent {
             this.helper = new ProcessHelper(Utils.session);
 
             Utils.loadDirectory(Conf.BatchProcess.MainPath);
-///BBBBB
+
             IInformationObject[] list = this.getSubReviewProcessByPrjNumber(helper ,"PRJ001");
             this.deleteSubReviewProcess(list);
         } catch (Exception e) {
