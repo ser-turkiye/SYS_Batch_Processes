@@ -42,7 +42,7 @@ public class DeleteEngDocuments extends UnifiedAgent {
             log.error(e.getMessage());
             return resultError(e.getMessage());
         }
-        log.info("-- DeleteEngDocuments Agent Finished -----");
+        log.info("-- DeleteEngDocuments Agent Finished -----" + others);
         return resultSuccess("Agent Finished Succesfully");
     }
     private void deleteDocument(IDocument mainDoc) throws Exception {
@@ -52,7 +52,7 @@ public class DeleteEngDocuments extends UnifiedAgent {
         log.info("Deleting Document :" + mainDoc.getID());
         try {
             if(!Objects.equals(mainDoc.getClassID(), Conf.ClassIDs.EngineeringCopy)) {
-                List<ILink> mainAttachLinks = getEventTask().getProcessInstance().getLoadedInformationObjectLinks().getLinks();
+                //List<ILink> mainAttachLinks = getEventTask().getProcessInstance().getLoadedInformationObjectLinks().getLinks();
                 ILink[] links = getDocumentServer().getReferencedRelationships(getSes(), mainDoc, false, false);
                 ILink[] links2 = getDocumentServer().getReferencingRelationships(getSes(), mainDoc.getID(), false);
                 for (ILink link : links) {
@@ -114,11 +114,11 @@ public class DeleteEngDocuments extends UnifiedAgent {
         StringBuilder builder = new StringBuilder();
         builder.append("TYPE = '").append(Conf.ClassIDs.EngineeringDocument).append("'")
                 .append(" AND ")
-                .append("CCMPRJCARD_CODE").append(" IS NOT NULL");
+                .append("CCMPRJCARD_CODE").append(" IS NOT NULL")
                 //.append(" AND ")
                 //.append("CCMPRJDOCNUMBER").append(" IS NULL")
-                //.append(" AND ")
-                //.append("CCMPRJDOCFILENAME").append(" IS NULL");
+                .append(" AND ")
+                .append("CCMPRJDOCFILENAME").append(" IS NULL");
         String whereClause = builder.toString();
         log.info("Where Clause: " + whereClause);
         IInformationObject[] list = helper.createQuery(new String[]{Conf.Databases.EngineeringDocument}, whereClause, "", 0, false);

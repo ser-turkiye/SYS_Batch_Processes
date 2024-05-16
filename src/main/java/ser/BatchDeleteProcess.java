@@ -30,7 +30,7 @@ public class BatchDeleteProcess extends UnifiedAgent {
 
             Utils.loadDirectory(Conf.BatchProcess.MainPath);
 
-            IInformationObject[] list = this.getAllSubReviewProcess(helper);
+            IInformationObject[] list = this.getSubReviewProcessByPrjNumber(helper ,"PRJ001");
             this.deleteSubReviewProcess(list);
         } catch (Exception e) {
             log.error("Exception Caught");
@@ -58,7 +58,7 @@ public class BatchDeleteProcess extends UnifiedAgent {
             docNumber = task.getDescriptorValue(Conf.Descriptors.DocNumber);
             revNumber = task.getDescriptorValue(Conf.Descriptors.Revision);
 
-            //if(docs.contains(processID)){continue;}
+            if(docs.contains(processID)){continue;}
 
             IDocument mainDoc = Utils.server.getDocument4ID(mainDocID, Utils.session);
             if(mainDoc == null){
@@ -117,14 +117,6 @@ public class BatchDeleteProcess extends UnifiedAgent {
         builder.append("TYPE = '").append(Conf.ClassIDs.SubProcess).append("'")
                 .append(" AND ")
                 .append(Conf.DescriptorLiterals.PrjCardCode).append(" = '").append(prjNumber).append("'");
-        String whereClause = builder.toString();
-        log.info("Where Clause: " + whereClause);
-        IInformationObject[] list = helper.createQuery(new String[]{Conf.Databases.Process}, whereClause, "", 0, false);
-        return list;
-    }
-    public IInformationObject[] getSubReviewProcessByDocNumber(ProcessHelper helper, String docNumber) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("TYPE = '").append(Conf.ClassIDs.SubProcess).append("'");
         String whereClause = builder.toString();
         log.info("Where Clause: " + whereClause);
         IInformationObject[] list = helper.createQuery(new String[]{Conf.Databases.Process}, whereClause, "", 0, false);
