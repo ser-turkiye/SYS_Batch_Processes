@@ -82,6 +82,8 @@ public class Conf {
         public static final String SubProcess = "629a28c4-6c36-44d0-90f7-1e5802f038e8";
         public static final String ReviewMain = "69d42aaf-6978-4b5a-8178-88a78f4b3158";
         public static final String DeleteProcess = "8c155b16-4e35-4f06-ad4d-6ee844537e09";
+        public static final String SendToDCCProcess = "0e83647a-7611-4b50-80f3-2132dacca293";
+        public static final String CorrepondenceProcess = "8bf0a09b-b569-4aef-984b-78cf1644ca19";
         public static final String MultiReviewMain = "1dc85f54-f737-4867-b538-71c6277da8f0";
         public static final String ProjectWorkspace = "32e74338-d268-484d-99b0-f90187240549";
         public static final String ExternalProjectUsers = "f59d2677-6fb5-4651-9666-0e555b45dc36";
