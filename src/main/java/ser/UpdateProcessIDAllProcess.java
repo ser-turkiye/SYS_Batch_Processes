@@ -44,22 +44,26 @@ public class UpdateProcessIDAllProcess extends UnifiedAgent {
     }
     public void updateProcessID(IInformationObject[] list) throws Exception {
         int cnt = 0;
+        int cnt1 = 0;
         int all = list.length;
         List<String> updateds = new ArrayList<>();
         for(IInformationObject infoDoc : list){
-            if(Utils.hasDescriptor(infoDoc, "ProcessID")) {
+            if(Utils.hasDescriptor(infoDoc, "TaskID")) {
                 ITask task = (ITask) infoDoc;
                 IProcessInstance processInstance = task.getProcessInstance();
                 String pID = processInstance.getID();
-                if(updateds.contains(pID)){continue;}
+                String tID = task.getID();
+                if(updateds.contains(tID)){continue;}
                 if(processInstance.findLockInfo().getOwnerID() != null){
                     System.out.println("Process is locked.." + task.getID() + "..continue");
+                    cnt1++;
                     continue;
                 }
-                System.out.println("start update.. doc ID:" + pID);
-                processInstance.setDescriptorValue("ProcessID", pID);
+                System.out.println("start update.. task ID:" + tID);
+                //processInstance.setDescriptorValue("TaskID", tID);
+                task.setDescriptorValue("TaskID", tID);
                 try {
-                    processInstance.commit();
+                    task.commit();
                 }catch (Exception e){
                     System.out.println("NOT Updated INFO OBJECT IS:" + infoDoc.getDisplayName());
                     continue;
@@ -67,9 +71,9 @@ public class UpdateProcessIDAllProcess extends UnifiedAgent {
                 //log.info("Updated Process batch...maindoc committed...PROCESS ID IS:" + processInstance.getDescriptorValue("ProcessID"));
                 //TimeUnit.SECONDS.sleep(45);
                 //System.out.println("...sleeping (45 second)");
-                updateds.add(pID);
+                updateds.add(tID);
                 cnt++;
-                System.out.println("UPDATED : [" + cnt + "] / [" + all + "]");
+                System.out.println("UPDATED : [" + cnt + "] / [" + cnt1 + "] / [" + all + "]");
             }
         }
     }
@@ -158,9 +162,9 @@ public class UpdateProcessIDAllProcess extends UnifiedAgent {
     }
     public IInformationObject[] getCustomProcess(ProcessHelper helper) {
         StringBuilder builder = new StringBuilder();
-        builder.append("TYPE = '").append(Conf.ClassIDs.OutOfOfficeProcess).append("'")
+        builder.append("TYPE = '").append(Conf.ClassIDs.SendToDCCProcess).append("'")
             .append(" AND ")
-            .append("PROCESSID").append(" IS NULL");
+            .append("TASKID").append(" IS NULL");
         String whereClause = builder.toString();
         log.info("Where Clause: " + whereClause);
         IInformationObject[] list = helper.createQuery(new String[]{Conf.Databases.Process}, whereClause, "", 0, false);

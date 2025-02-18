@@ -64,8 +64,6 @@ dependencies {
     // They will be added to the /build/libs directory when running the 'jar' task
     externalImplementation (group: 'com.google.code.gson', name: 'gson', version: '2.9.0')
 
-    ///BB-start
-
     // https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail
     externalImplementation group: 'com.sun.mail', name: 'jakarta.mail', version: '2.0.1'
 
@@ -86,8 +84,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.poi/poi-examples
     externalImplementation group: 'org.apache.poi', name: 'poi-examples', version: '5.2.5'
-
-    ///BB-finish
 
     // Put local JARs not pulled from a repository into /lib
     // Example: sapjco3.jar (cannot be hosted in Artifactory)

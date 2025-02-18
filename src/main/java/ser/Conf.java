@@ -12,6 +12,7 @@ public class Conf {
     }
     public static class BatchProcess {
         public static final String MainPath = "C:/tmp2/bulk/batchprocess";
+        public static final String TmpPath = "C:/tmp2/bulk";
         public static final String WebBase = "http://localhost/webcube/";
     }
     public static class DeleteProcessSheetIndex {

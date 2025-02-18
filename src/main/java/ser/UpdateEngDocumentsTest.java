@@ -24,8 +24,7 @@ public class UpdateEngDocumentsTest extends UnifiedAgent {
     String decisionCode = "";
     @Override
     protected Object execute() {
-        if (getBpm() == null)
-            return resultError("Null BPM object");
+
 
         Utils.session = getSes();
         Utils.bpm = getBpm();
@@ -33,8 +32,8 @@ public class UpdateEngDocumentsTest extends UnifiedAgent {
         try {
             helper = new ProcessHelper(getSes());
             log.info("-- UpdateEngDocuments Agent Started -----");
-            IInformationObject[] list = this.getEmptyDocIDEngineeringDocs(helper);
-            this.updateDocIDEngDocs(list);
+            IInformationObject[] list = this.getEngineeringDocs(helper);
+            this.updateConfidentialityEngDocs(list);
         } catch (Exception e) {
             log.error("UpdateEngDocuments Exception Caught");
             log.error(e.getMessage());
@@ -87,9 +86,9 @@ public class UpdateEngDocumentsTest extends UnifiedAgent {
         StringBuilder builder = new StringBuilder();
         builder.append("TYPE = '").append(Conf.ClassIDs.EngineeringDocument).append("'")
                 .append(" AND ")
-                .append("CCMPRJDOCWFTASKNAME").append(" = '").append("Completed").append("'")
+                .append("CCMPRJDOCAPPRCODE").append(" IS NOT NULL")
                 .append(" AND ")
-                .append("CCMPRJDOCAPPRCODE").append(" IS NULL");
+                .append("CCMCONFIDENTIALITY = '0'" );
         String whereClause = builder.toString();
         log.info("Where Clause: " + whereClause);
         IInformationObject[] list = helper.createQuery(new String[]{Conf.Databases.EngineeringDocument}, whereClause, "", 0, false);
@@ -105,6 +104,21 @@ public class UpdateEngDocumentsTest extends UnifiedAgent {
             log.info("Updated EngDocument batch...maindoc committed...DOC ID IS:" + mainDocument.getDescriptorValue("DocID"));
             TimeUnit.SECONDS.sleep(30);
             log.info("UpdateEngDocument batch...sleeping (30 second)");
+        }
+    }
+    public void updateConfidentialityEngDocs(IInformationObject[] list) throws Exception {
+        int cnt = 0;
+        for(IInformationObject infoDoc : list){
+            IDocument mainDocument = (IDocument) infoDoc;
+            String docID = mainDocument.getID();
+            log.info("DOC ID updated.. doc ID:" + docID);
+            mainDocument.setDescriptorValue("ccmConfidentiality", "Normal");
+            mainDocument.commit();
+            cnt++;
+            log.info("Updated EngDocument batch...maindoc committed...DOC ID IS:" + mainDocument.getDescriptorValue("DocID"));
+            TimeUnit.SECONDS.sleep(1);
+            log.info("UpdateEngDocument batch...sleeping (3 second)");
+            System.out.println("UpdateEngDocument batch...sleeping (3 second) [" + cnt + "] / ["+ list.length + "]");
         }
     }
     public IInformationObject[] getEmptyDocIDEngineeringDocs(ProcessHelper helper) {
